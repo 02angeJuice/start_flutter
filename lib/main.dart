@@ -26,27 +26,64 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text("HomePage"),
-          backgroundColor: Colors.amber.shade200,
-        ),
-        body: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ContentWidget("23223"),
-              ContentWidget("3232"),
-              ContentWidget("232"),
-              ContentWidget("232"),
-              ContentWidget("232"),
-              ContentWidget("232"),
-              ContentWidget("232"),
-              ContentWidget("232"),
-            ],
+          appBar: AppBar(
+            title: const Text("HomePage"),
+            backgroundColor: Colors.amber.shade200,
           ),
-        ),
-      ),
+          body: NestedScrollViewExample()
+
+          // SafeArea(
+          //   child: Column(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       ContentWidget("23223"),
+          //       ContentWidget("3232"),
+          //       ContentWidget("232"),
+          //       ContentWidget("232"),
+          //       ContentWidget("232"),
+          //       ContentWidget("232"),
+          //       ContentWidget("232"),
+          //       ContentWidget("232"),
+          //     ],
+          //   ),
+          // ),
+          ),
     );
+  }
+}
+
+class NestedScrollViewExample extends StatelessWidget {
+  const NestedScrollViewExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: NestedScrollView(
+            // Setting floatHeaderSlivers to true is required in order to float
+            // the outer slivers over the inner scrollable.
+            floatHeaderSlivers: true,
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              return <Widget>[
+                SliverAppBar(
+                  title: const Text('Floating Nested SliverAppBar'),
+                  floating: true,
+                  expandedHeight: 200.0,
+                  forceElevated: innerBoxIsScrolled,
+                ),
+              ];
+            },
+            body: ListView.builder(
+                padding: const EdgeInsets.all(8),
+                itemCount: 30,
+                itemBuilder: (BuildContext context, int index) {
+                  return SizedBox(
+                    height: 50,
+                    child: Center(child: Text('Item $index')),
+                  );
+
+                  // return ContentWidget('Item $index');
+                })));
   }
 }
 
